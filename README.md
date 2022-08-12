@@ -1,2 +1,2 @@
 # SML
-Project about development simulator of simple mashine language
+Project about development simple simulator of mashine language
