@@ -11,6 +11,7 @@
 #define BRANCHNEG 41
 #define BRUNCHZERO 42
 #define HALT 43
+void printDump(int,short,int,short,short,int *);
 int main(int argc, char const *argv[])
 {
     int accumulator=+0000;
@@ -20,27 +21,12 @@ int main(int argc, char const *argv[])
     short operand = 00;
     int memory[100];
     printf("Добро пожаловать в симулятор машинного кода\nВводите вашу программу по одной команде\nСлева будет выводиться текущий адрес команды\nДля окончания ввода введите -99999\n");
-    printf("РЕГИСТРЫ\n%d\n%d\n%d\n%d\n%d\n",accumulator,instructionCounter,instructionRegister,operationCode,operand);
     // for (short i = 0; i < 10; i++)
     // {
     //     printf("%8d",i);
     // }
     // puts("0");
-    for (short i = 0; i < 100; i++)
-    {
-        if (i<9)
-        {
-            printf("%8d",i);
-        }
-        
-        if (i%10==0)
-        {
-            printf("\n%d",i);
-            
-        }
-        
-    }
-
+printDump(accumulator,instructionCounter,instructionRegister,operationCode,operand,memory);
     for (short i = 0; i < 100-1; i++)
     {
         printf("\n%0d?",i);
@@ -61,16 +47,27 @@ int main(int argc, char const *argv[])
     return 0;
 }
 void printDump(int accumulator,short instructionCounter,int instructionRegister,short operationCode,short operand,int *memory){
+    printf("РЕГИСТРЫ\n%d\n%d\n%d\n%d\n%d\n",accumulator,instructionCounter,instructionRegister,operationCode,operand);
     for (short i = 0; i < 10; i++)
     {
-        printf("%-6s",i);
+        printf("%8d",i);
     }
-    for (short i = 0; i < 100; i++)
+    for (short i = 0,j=0; i < 100; i++)
     {
         if (i%10==0)
         {
-            printf("\n%d",i);
+            printf("\n");
+            printf("%d",i);
         }
+        // if (j%10==0)
+        // {
+        //     printf("%d",j);
+        //     j+=10;
+        // }
+        printf("%+8d",&memory[i]);
+        
+        
+                 
         
     }
     
@@ -80,6 +77,7 @@ void chooseOperation(int operationCode,int operand,int *memory,int accumulator,s
     {
     case READ:
         scanf("%d",&memory[operand]);
+        
         break;
     case WRITE:
     printf("%s",operand);
@@ -91,7 +89,7 @@ void chooseOperation(int operationCode,int operand,int *memory,int accumulator,s
     memory[operand]=accumulator;
         break;
     case ADD:
-accumulator=accumulator+memory[operand];
+accumulator=accumulator+memory[operand] ;
         break;
     case SUBTRACT:
     accumulator=accumulator-memory[operand];
